@@ -1,6 +1,14 @@
 from flask import Flask, request
 import telepot
 import urllib3
+import time
+import atexit
+#from flask_crontab import Crontab 
+
+#estoes para el cron
+#from apscheduler.schedulers.background import BackgroundScheduler
+
+
 
 proxy_url = "http://proxy.server:3128"
 telepot.api._pools = {
@@ -14,6 +22,9 @@ bot.setWebhook("https://cjpm1983.pythonanywhere.com/{}".format(secret), max_conn
 
 app = Flask(__name__)
 
+# para elschedule
+#crontab = Crontab(app)
+
 @app.route('/{}'.format(secret), methods=["POST"])
 def telegram_webhook():
     update = request.get_json()
@@ -24,7 +35,7 @@ def telegram_webhook():
             if text == "Carlos":
                 bot.sendMessage(chat_id, "Ese es el mostro, jj y sergio le va a tirar un cabo en este super bot")
             else:
-                bot.sendMessage(chat_id, "From the web: you said '{}'".format(text))
+                bot.sendMessage(chat_id, "dijiste '{}'".format(text))
         else:
             bot.sendMessage(chat_id, "From the web: sorry, I didn't understand that kind of message")
     return "OK"
@@ -32,3 +43,25 @@ def telegram_webhook():
 @app.route('/check')
 def check():
     return "Corriendo sin problemas"
+
+
+
+#para elcron
+#def tarea():
+#    #print(time.strftime("%A, %d. %B %Y %I:%M:%S %p"))
+#    bot.sendMessage("checkeando intervalo 5 segundos")
+
+
+
+#@crontab.job(minute="1", hour="0")
+#def my_scheduled_job():
+#    tarea()
+
+
+
+#scheduler = BackgroundScheduler()
+#scheduler.add_job(func=print_date_time, trigger="interval", seconds=5)
+#scheduler.start()
+
+# Shut down the scheduler when exiting the app
+#atexit.register(lambda: scheduler.shutdown())
