@@ -50,7 +50,8 @@ def telegram_webhook():
 
             elif text == "Denis":
                 bot.sendMessage(chat_id, "ese es el mostro, el terror de los AP ladrones")
-
+            elif text == "Angelina":
+                bot.sendMessage(chat_id, "Angelina va a ser informatica, jjj")
             elif text == "/cron":
                 #cron()
                 bot.sendMessage(chat_id, "se sincronizo {}".format(cron()))
